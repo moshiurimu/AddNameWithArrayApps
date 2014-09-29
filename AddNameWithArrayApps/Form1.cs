@@ -17,50 +17,65 @@ namespace AddNameWithArrayApps
             InitializeComponent();
         }
 
-        string[] name = new string[10];
 
 
-        int temp;
+        List<string> nameList = new List<string>();
+        int setCount=0;
+        int temp=0;
         private void addButton_Click(object sender, EventArgs e)
         {
 
-            name[temp] = nameTextBox.Text;
-            countLabel.Text = (temp+1).ToString();
-
-            temp++;
+            nameList.Add(nameTextBox.Text);
+            countLabel.Text = Convert.ToString(++temp);
             nameTextBox.Text = "";
-
-            if (countLabel.Text== "10")
+            if (temp== setCount)
             {
-                addButton.Enabled = false;
-
-                nameListBox.Items.Clear();
-                for (int count = 0; count < name.Length; count++)
+                nameListView.Items.Clear();
+                foreach (string myName in nameList)
                 {
-                    nameListBox.Items.Add((count + 1) + ". " + name[count]);
+                    nameListView.Items.Add(myName);
                 }
-
+                addButton.Enabled = false;
             }
-            
+
         }
 
         private void showAllButton_Click(object sender, EventArgs e)
         {
-            nameListBox.Items.Clear();
-
-            for (int count = 0; count < Convert.ToInt16(countLabel.Text); count++)
+            nameListView.Items.Clear();
+            foreach (string myName in nameList)
             {
-                nameListBox.Items.Add((count+1)+ ". "+ name[count]);
+                nameListView.Items.Add(myName);
             }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            addButton.Enabled = true;
-            nameListBox.Items.Clear();
+            addButton.Enabled = false;
+            setButton.Enabled = true;
+            
             countLabel.Text = "";
+            nameList = new List<string>();
+
+            nameListView.Items.Clear();
 
             temp = 0;
+            setCount = 0;
+
+        }
+
+        private void setButton_Click(object sender, EventArgs e)
+        {
+            setCount = Convert.ToInt32(setTextBox.Text);
+            setTextBox.Text = "";
+            addButton.Enabled = true;
+            setButton.Enabled = false;
+        }
+
+        private void AddNameUI_Load(object sender, EventArgs e)
+        {
+            addButton.Enabled = false;
+
         }
     }
 }
